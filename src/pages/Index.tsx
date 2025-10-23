@@ -2,20 +2,29 @@ import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 
 const fragranceFamilies = [
-  { name: 'Кожаные', path: '/category/leather' },
-  { name: 'Цитрусовые', path: '/category/citrus' },
-  { name: 'Цитрусовые Пряные', path: '/category/citrus-spicy' },
-  { name: 'Цитрусовые Фужерные', path: '/category/citrus-fougere' },
-  { name: 'Фужерные', path: '/category/fougere' },
-  { name: 'Фужерные Зеленые', path: '/category/fougere-green' },
-  { name: 'Фужерные Фруктовые', path: '/category/fougere-fruity' },
-  { name: 'Цветочные Фруктовые', path: '/category/floral-fruity' },
-  { name: 'Цветочные Зеленые', path: '/category/floral-green' },
-  { name: 'Цветочные Фруктовые Сладкие', path: '/category/floral-fruity-sweet' },
-  { name: 'Восточные', path: '/category/oriental' },
-  { name: 'Восточные Фужерные', path: '/category/oriental-fougere' },
-  { name: 'Восточные Цветочные', path: '/category/oriental-floral' },
-  { name: 'Восточные Пряные', path: '/category/oriental-spicy' },
+  { name: 'Кожаные', path: '/category/leather', featured: true },
+  { name: 'Цитрусовые', path: '/category/citrus', featured: false },
+  { name: 'Цитрусовые Пряные', path: '/category/citrus-spicy', featured: false },
+  { name: 'Цитрусовые Фужерные', path: '/category/citrus-fougere', featured: false },
+  { name: 'Фужерные', path: '/category/fougere', featured: true },
+  { name: 'Фужерные Зеленые', path: '/category/fougere-green', featured: false },
+  { name: 'Фужерные Фруктовые', path: '/category/fougere-fruity', featured: false },
+  { name: 'Цветочные Фруктовые', path: '/category/floral-fruity', featured: false },
+  { name: 'Цветочные Зеленые', path: '/category/floral-green', featured: false },
+  { name: 'Цветочные Фруктовые Сладкие', path: '/category/floral-fruity-sweet', featured: false },
+  { name: 'Восточные', path: '/category/oriental', featured: true },
+  { name: 'Восточные Фужерные', path: '/category/oriental-fougere', featured: false },
+  { name: 'Восточные Цветочные', path: '/category/oriental-floral', featured: false },
+  { name: 'Восточные Пряные', path: '/category/oriental-spicy', featured: false },
+  { name: 'Древесные', path: '/category/woody', featured: true },
+  { name: 'Древесные Мшистые', path: '/category/woody-mossy', featured: false },
+  { name: 'Древесные Пряные', path: '/category/woody-spicy', featured: false },
+  { name: 'Шипровые', path: '/category/chypre', featured: false },
+  { name: 'Морские', path: '/category/aquatic', featured: false },
+  { name: 'Гурманские', path: '/category/gourmand', featured: true },
+  { name: 'Альдегидные', path: '/category/aldehydic', featured: false },
+  { name: 'Пудровые', path: '/category/powdery', featured: false },
+  { name: 'Ароматические', path: '/category/aromatic', featured: false },
 ];
 
 export default function Index() {
@@ -28,25 +37,29 @@ export default function Index() {
           <div className="inline-flex items-center gap-3 mb-6">
             <Icon name="Flower2" className="text-accent" size={32} />
           </div>
-          <h1 className="font-heading text-6xl md:text-8xl font-light text-primary mb-6 tracking-tight">
-            Fragrance Families
+          <h1 className="font-heading text-5xl md:text-7xl font-light text-primary mb-6 tracking-tight">
+            Выбрать по группе аромата
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-2xl mx-auto">
-            Откройте свой аромат среди 14 ароматических семейств
+            Откройте свой аромат среди <span className="text-accent font-medium">23</span> ароматических семейств
           </p>
         </header>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             {fragranceFamilies.map((family, index) => (
               <button
                 key={family.name}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => window.location.href = family.path}
-                className="group relative overflow-hidden bg-white border border-neutral-200 px-8 py-6 transition-all duration-500 hover:border-accent hover:shadow-2xl"
+                className={`group relative overflow-hidden bg-white border border-neutral-200 transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1 hover:scale-105 ${
+                  family.featured 
+                    ? 'px-8 md:px-10 py-4 md:py-5' 
+                    : 'px-6 md:px-8 py-3 md:py-4'
+                }`}
                 style={{
-                  animationDelay: `${index * 50}ms`,
+                  animationDelay: `${index * 30}ms`,
                 }}
               >
                 <div
@@ -56,8 +69,12 @@ export default function Index() {
                   }}
                 />
                 
-                <div className="relative flex items-center justify-between">
-                  <span className="font-heading text-2xl md:text-3xl font-light text-primary group-hover:text-accent transition-colors duration-300">
+                <div className="relative flex items-center gap-3">
+                  <span className={`font-heading font-light text-primary group-hover:text-accent transition-colors duration-300 ${
+                    family.featured 
+                      ? 'text-2xl md:text-3xl' 
+                      : 'text-lg md:text-xl'
+                  }`}>
                     {family.name}
                   </span>
                   
@@ -68,12 +85,12 @@ export default function Index() {
                         ? 'translate-x-1 opacity-100 text-accent'
                         : 'opacity-0 -translate-x-2 text-primary'
                     }`}
-                    size={20}
+                    size={family.featured ? 22 : 18}
                   />
                 </div>
 
                 <div
-                  className={`absolute bottom-0 left-0 h-0.5 bg-accent transition-all duration-500 ${
+                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-accent via-accent to-transparent transition-all duration-500 ${
                     hoveredIndex === index ? 'w-full' : 'w-0'
                   }`}
                 />
